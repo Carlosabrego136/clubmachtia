@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Club Machtia | Iniciar sesión</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="mark"></div>
+      <div class="name">Club<br>Machtia</div>
+    </div>
+
+    <h1>Bienvenido de vuelta</h1>
+    <p class="subtitle">Inicia sesión para continuar en tu cuenta</p>
+
+    <form id="loginForm" onsubmit="event.preventDefault(); window.location.href='home.html';">
+      <div class="field">
+        <label for="user">Correo o nombre de usuario</label>
+        <input type="text" id="user" placeholder="tucorreo@ejemplo.com" required>
+      </div>
+
+      <div class="field">
+        <label for="pass">Contraseña</label>
+        <div class="input-wrap">
+          <input type="password" id="pass" placeholder="••••••••" required>
+          <button type="button" class="toggle-pass" id="togglePass">Ver</button>
+        </div>
+      </div>
+
+      <div class="login-meta">
+        <a href="#" onclick="alert('Aquí iría el flujo de recuperación de contraseña por correo.'); return false;">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <button type="submit" class="btn-primary">Iniciar sesión</button>
+    </form>
+
+    <p class="login-footnote">Etapa 1 — Prototipo funcional · Club Machtia</p>
+  </div>
+</div>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
