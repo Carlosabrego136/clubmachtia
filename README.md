@@ -1,23 +1,44 @@
-# Club Machtia — Etapa 1 (Prototipo funcional)
+# Club Machtia — Next.js (Etapa 1)
 
-Este prototipo cubre los 4 elementos pedidos para la Etapa 1:
+Proyecto migrado de HTML estático a **Next.js 14 + TypeScript + Tailwind**, listo para GitHub + Vercel.
 
-## 1. Interfaz de plataforma, menú y tipos de usuario
-- `index.html` → Pantalla de inicio de sesión (1.1): login, recuperar contraseña, botón mostrar/ocultar contraseña.
-- `home.html` → Pantalla de inicio (1.2): bienvenida, link de invitación, anuncios, resumen de actividad, menú lateral vertical con submenús colapsables, menú horizontal (Mis Ganancias, Tienda, countdown a la Campaña de Lanzamiento — 20 oct 2027), menú de perfil (datos de cuenta, enlazar Facebook/Instagram, cerrar sesión) y notificaciones.
-- Los 5 tipos de cuenta (1.3) están simulados en `assets/js/app.js`. Para probar cada rol, cambia la variable `ROLE_ACTUAL` (líneas ~64) por: `administrador`, `profesor`, `socio`, `usuario` o `asistente`. El menú y las notas de sesión cambian según el rol.
+## Qué cambió respecto a la versión anterior
+- Login (`/`) ahora tiene el estilo "hero": fondo animado a pantalla completa, tarjeta glass (blur), animaciones de entrada en cascada — con los campos y textos reales de Club Machtia (no es una copia de otro producto).
+- Dashboard (`/home`) migrado a componente React con la misma lógica de roles, menú y countdown que ya tenías, ahora con estado real de React en vez de manipular el DOM a mano.
+- El selector "Probar como: ..." sigue ahí para probar los 5 roles sin backend.
 
-## Cómo verlo
-Abre `index.html` en el navegador (doble clic) o súbelo tal cual a Vercel/cualquier hosting estático. El login te lleva directo a `home.html` (no hay backend todavía — es solo la interfaz).
+## Correr en local
+```bash
+npm install
+npm run dev
+```
+Abre http://localhost:3000
 
-## Lo que falta para el resto de la Etapa 1
-- Elemento 2: Red de usuarios, sistema de invitación real y Campaña de Lanzamiento (backend + base de datos).
-- Elemento 3: Perfil personal y funcionalidades.
-- Elemento 4: Visualización, contenido y evaluación de Cursos y Talleres.
+## Subir a GitHub (tu repo ya existe: Carlosabrego136/clubmachtia)
+```bash
+git init
+git add .
+git commit -m "Migracion a Next.js - Etapa 1 con estilo hero en login"
+git branch -M main
+git remote add origin https://github.com/Carlosabrego136/clubmachtia.git
+git push -u origin main --force
+```
+Usa `--force` solo si quieres reemplazar por completo lo que subiste antes en HTML plano. Si quieres conservar el historial anterior, avísame y usamos otra estrategia (branch aparte + merge).
 
-Este entregable es la base visual y de navegación (elemento 1) sobre la que se construyen los siguientes tres.
+## Desplegar en Vercel
+1. Entra a vercel.com → "Add New Project"
+2. Importa el repo `clubmachtia`
+3. Vercel detecta Next.js automáticamente — no necesitas configurar nada
+4. Deploy
 
-## Notas técnicas
-- HTML + CSS + JS puro, sin dependencias — fácil de migrar a Laravel (Blade) o cualquier framework después.
-- Paleta y estilo basados en las capturas que compartió el cliente (azul índigo / celeste, tarjetas blancas).
-- Responsive básico incluido (sidebar colapsable en móvil).
+## Sobre el video de fondo
+El login usa un fondo animado propio (círculos de color con blur, en tonos de Club Machtia) en vez de un video, para no depender de un archivo ajeno. Si quieres un video real:
+1. Consigue un video con licencia (Pexels/Envato, o grabado propio) que combine con la marca
+2. Colócalo en `/public/videos/tu-video.mp4`
+3. En `src/components/HeroBackground.tsx` sigue las instrucciones comentadas para activarlo
+
+## Pendiente (Elementos 2, 3 y 4 de la Etapa 1)
+- Backend real de login (por ahora el formulario solo redirige, no valida)
+- Sistema de invitación y red real
+- Perfil personal editable
+- Contenido y evaluación de Cursos/Talleres
