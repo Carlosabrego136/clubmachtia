@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Bell, ChevronRight, Menu } from 'lucide-react';
 
 type Role = 'administrador' | 'profesor' | 'socio' | 'usuario' | 'asistente';
@@ -25,24 +26,41 @@ const ROLE_NOTES: Record<Role, string> = {
     'Sesión de Asistente Administrativo: puedes editar anuncios, revisar contenido y moderar foros.',
 };
 
-const NAV_SECTIONS: { label: string; children?: string[] }[] = [
-  { label: 'Mi Oficina', children: ['Mi Red', 'Mis Referidos', 'Red 2x15'] },
+const NAV_SECTIONS: { label: string; children?: { label: string; href?: string }[] }[] = [
+  {
+    label: 'Mi Oficina',
+    children: [
+      { label: 'Mi Red', href: '/home/red-usuarios' },
+      { label: 'Mis Referidos' },
+      { label: 'Red 2x15', href: '/home/red-usuarios' },
+    ],
+  },
   { label: 'Cursos' },
   { label: 'Talleres' },
   { label: 'Biblioteca Digital' },
   {
     label: 'Universidad Machtia®',
-    children: ['Primaria', 'Secundaria', 'Preparatoria', 'Licenciaturas'],
+    children: [{ label: 'Primaria' }, { label: 'Secundaria' }, { label: 'Preparatoria' }, { label: 'Licenciaturas' }],
   },
   {
     label: 'Eventos especiales',
-    children: ['Cursos Presenciales', 'Seminarios Online', 'Diplomados', 'Convenciones'],
+    children: [
+      { label: 'Cursos Presenciales' },
+      { label: 'Seminarios Online' },
+      { label: 'Diplomados' },
+      { label: 'Convenciones' },
+    ],
   },
   { label: 'SEP-Conocer' },
   { label: 'Romi®' },
   {
     label: 'Servicios Digitales',
-    children: ['Pago de Servicios', 'Recargas telefónicas', 'Seguros Médicos y de Vida', 'Autofinanciamiento'],
+    children: [
+      { label: 'Pago de Servicios' },
+      { label: 'Recargas telefónicas' },
+      { label: 'Seguros Médicos y de Vida' },
+      { label: 'Autofinanciamiento' },
+    ],
   },
   { label: 'Sorteos' },
   { label: 'Fundación Machtia®' },
@@ -121,15 +139,25 @@ export default function Dashboard() {
               </button>
               {section.children && openSection === section.label && (
                 <div className="pl-4 flex flex-col">
-                  {section.children.map((child) => (
-                    <a
-                      key={child}
-                      href="#"
-                      className="text-[13px] text-[#6B7280] hover:text-[#1C1E2B] hover:bg-[#F4F6FB] rounded-md px-3 py-2"
-                    >
-                      {child}
-                    </a>
-                  ))}
+                  {section.children.map((child) =>
+                    child.href ? (
+                      <Link
+                        key={child.label}
+                        href={child.href}
+                        className="text-[13px] text-[#6B7280] hover:text-[#1C1E2B] hover:bg-[#F4F6FB] rounded-md px-3 py-2"
+                      >
+                        {child.label}
+                      </Link>
+                    ) : (
+                      <a
+                        key={child.label}
+                        href="#"
+                        className="text-[13px] text-[#6B7280] hover:text-[#1C1E2B] hover:bg-[#F4F6FB] rounded-md px-3 py-2"
+                      >
+                        {child.label}
+                      </a>
+                    )
+                  )}
                 </div>
               )}
             </div>
