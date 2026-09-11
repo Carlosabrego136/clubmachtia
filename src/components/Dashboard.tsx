@@ -164,9 +164,12 @@ export default function Dashboard() {
           ))}
 
           {role === 'administrador' && (
-            <a className="mt-3 pt-3 border-t border-[#E4E7EE] rounded-lg text-cm-primary font-bold text-[14px] px-3 py-2.5">
+            <Link
+              href="/home/red-general"
+              className="mt-3 pt-3 border-t border-[#E4E7EE] rounded-lg text-cm-primary font-bold text-[14px] px-3 py-2.5 block"
+            >
               Panel de Administrador
-            </a>
+            </Link>
           )}
           {(role === 'profesor' || role === 'socio') && (
             <a className="rounded-lg hover:bg-[#F4F6FB] text-[14px] font-medium px-3 py-2.5">
