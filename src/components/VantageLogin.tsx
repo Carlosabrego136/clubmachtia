@@ -354,6 +354,14 @@ export default function VantageLogin() {
           flex-direction: column;
           align-items: flex-start;
           max-width: 560px;
+          padding: 24px 28px 24px 0;
+          background: radial-gradient(
+            ellipse 130% 110% at 0% 100%,
+            rgba(0,0,0,.68) 0%,
+            rgba(0,0,0,.46) 45%,
+            rgba(0,0,0,.15) 75%,
+            transparent 100%
+          );
         }
 
         .hero-title {
@@ -363,6 +371,7 @@ export default function VantageLogin() {
           font-size: var(--display-size);
           line-height: var(--display-leading);
           letter-spacing: -.03em;
+          text-shadow: 0 2px 6px rgba(0,0,0,.85), 0 8px 24px rgba(0,0,0,.6);
         }
 
         .line {
@@ -371,7 +380,7 @@ export default function VantageLogin() {
         }
 
         .line-one { color: #fff; }
-        .line-two { color: rgba(211,207,207,.82); }
+        .line-two { color: rgba(226,222,222,.92); }
 
         .line-reveal {
           display: block;
@@ -383,12 +392,12 @@ export default function VantageLogin() {
 
         .hero-copy {
           margin: clamp(14px, 2vh, 22px) 0 0;
-          color: rgba(226,229,228,.86);
-          font-weight: 400;
+          color: rgba(255,255,255,.94);
+          font-weight: 450;
           font-size: var(--copy-size);
           line-height: var(--copy-leading);
           max-width: 440px;
-          text-shadow: 0 1px 3px rgba(0,0,0,.7);
+          text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 2px 12px rgba(0,0,0,.6);
           animation: entrance-copy 620ms cubic-bezier(.16,1,.3,1) both;
           animation-delay: 700ms;
         }
@@ -548,7 +557,13 @@ export default function VantageLogin() {
             margin: 0 var(--gutter-start) 20px;
             width: auto;
           }
-          .hero-content { position: static; padding: 0 var(--gutter-start) 20px; max-width: none; }
+          .hero-content {
+            position: static;
+            padding: 20px var(--gutter-start) 24px;
+            margin: 0 calc(var(--gutter-start) * -1);
+            max-width: none;
+            background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.55) 40%, rgba(0,0,0,.72));
+          }
         }
       `}</style>
     </main>
