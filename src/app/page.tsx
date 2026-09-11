@@ -1,5 +1,5 @@
-import LoginHero from '@/components/LoginHero';
+import VantageLogin from '@/components/VantageLogin';
 
 export default function LoginPage() {
-  return <LoginHero />;
+  return <VantageLogin />;
 }
