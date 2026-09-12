@@ -64,6 +64,7 @@ const NAV_SECTIONS: { label: string; children?: { label: string; href?: string }
   },
   { label: 'Sorteos' },
   { label: 'Fundación Machtia®' },
+  { label: 'Negocios y Alianzas' },
 ];
 
 function useCountdown(target: string) {

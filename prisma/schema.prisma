@@ -1,0 +1,122 @@
+// ============================================================
+// Club Machtia — Esquema de base de datos (PostgreSQL / Aiven)
+// ============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Rol {
+  ADMINISTRADOR
+  PROFESOR_FACILITADOR
+  SOCIO
+  USUARIO
+  ASISTENTE_ADMINISTRATIVO
+}
+
+enum Suscripcion {
+  BASICA
+  PLUS
+  NEGOCIOS
+  NINOS
+  SOCIO_FUNDADOR
+  CREADOR_DE_CURSOS
+}
+
+enum EstadoCuenta {
+  PENDIENTE_CONFIRMACION // preregistro, esperando confirmar correo
+  PENDIENTE_APROBACION // ya completó el registro, falta revisar comprobante de pago
+  ACTIVA
+  INACTIVA // no renovó, conserva posición hasta 2 años
+  RECHAZADA
+}
+
+enum Lado {
+  IZQUIERDA
+  DERECHA
+}
+
+enum EstadoSlot {
+  VACIO
+  INVITADO
+  OCUPADO
+}
+
+model User {
+  id              String       @id @default(cuid())
+  nombre          String
+  apellido        String
+  nombreUsuario   String?      @unique
+  correo          String       @unique
+  correoRespaldo  String?
+  telefono        String?
+  ladaPais        String?
+  pais            String?
+  estadoProvincia String?
+  ciudad          String?
+
+  rol           Rol          @default(USUARIO)
+  suscripcion   Suscripcion?
+  status        EstadoCuenta @default(PENDIENTE_CONFIRMACION)
+
+  passwordHash        String?
+  comprobantePagoUrl  String?
+  tokenConfirmacion   String?  @unique
+  correoConfirmado    Boolean  @default(false)
+
+  linkInvitacion String @unique @default(cuid())
+
+  // Quién lo invitó originalmente (para la regla de "enviar al fondo")
+  invitadoPorId String?
+  invitadoPor   User?   @relation("Invitaciones", fields: [invitadoPorId], references: [id])
+  invitados     User[]  @relation("Invitaciones")
+
+  // Posición dentro del árbol binario de la red (fuera de los 8 niveles restringidos)
+  padreRedId  String?
+  padreRed    User?    @relation("ArbolRed", fields: [padreRedId], references: [id])
+  hijosRed    User[]   @relation("ArbolRed")
+  ladoEnPadre Lado?
+
+  slotRestringido SlotRestringido?
+
+  inactivoDesde DateTime?
+  creadoEn      DateTime  @default(now())
+  actualizadoEn DateTime  @updatedAt
+
+  @@index([invitadoPorId])
+  @@index([padreRedId])
+}
+
+// Los primeros 8 niveles de la Red General: existen como espacios fijos
+// que solo el Administrador llena generando una invitación específica.
+model SlotRestringido {
+  id         String     @id @default(cuid())
+  nivel      Int
+  posicion   Int
+  status     EstadoSlot @default(VACIO)
+  inviteLink String?    @unique
+
+  usuarioId String? @unique
+  usuario   User?   @relation(fields: [usuarioId], references: [id])
+
+  creadoEn      DateTime @default(now())
+  actualizadoEn DateTime @updatedAt
+
+  @@unique([nivel, posicion])
+}
+
+// Preregistro (Fase 1): antes de que exista una cuenta real de User.
+model Preregistro {
+  id                String   @id @default(cuid())
+  nombre            String
+  correo            String
+  invitadorSlug     String
+  tokenConfirmacion String   @unique
+  confirmado        Boolean  @default(false)
+  creadoEn          DateTime @default(now())
+}
